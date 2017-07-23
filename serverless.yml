@@ -31,4 +31,5 @@ functions:
       - http:
           path: go/{command}
           method: get
+      # CRON schedule event. Time set in UTC
       - schedule: cron(0 10 * * ? *)
