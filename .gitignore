@@ -1,0 +1,11 @@
+# Distribution / packaging
+.Python
+.vscode
+vendored/**
+!vendored/README.md
+*.pyc
+
+releases_current.json
+
+# Serverless directories
+.serverless

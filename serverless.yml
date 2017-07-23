@@ -1,0 +1,34 @@
+service: nokdoc-sentinel
+
+provider:
+  name: aws
+  # function exec timeout in seconds
+  timeout: 240
+  # max allocated mem size, in MB
+  memorySize: 256
+  runtime: python3.6
+  stage: dev
+  region: eu-central-1
+  deploymentBucket: rdodin
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: "s3:*"
+      Resource: "arn:aws:s3:::rdodin/*"
+
+# you can add packaging information here
+package:
+  exclude:
+    - ./**
+  include:
+    - sentinel.py
+    - vendored/**
+  
+
+functions:
+  check:
+    handler: sentinel.check
+    events:
+      - http:
+          path: go/{command}
+          method: get
+      - schedule: cron(0 10 * * ? *)
